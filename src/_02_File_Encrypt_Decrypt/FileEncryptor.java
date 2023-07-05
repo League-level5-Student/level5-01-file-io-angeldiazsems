@@ -33,7 +33,8 @@ public static void main(String[] args) {
 	String encrypted = encrypt(message, key);
 	try {
 		FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/messages.txt");
-		fw.write(encrypted);
+		fw.write(key);
+		fw.write("\n"+encrypted);
 		fw.close();
 	}
 	catch(IOException e) {
@@ -51,6 +52,8 @@ static String encrypt(String message, int key) {
 					  'v','w','x','y','z'};
 	//if indez is greater than length-1, reset back to 0
 	//if(i>arr.length-1) \n arr[0+key] = arr[i];
+	
+	
 	message = message.toLowerCase();
 	String changed = "";
 	for(int i = 0; i < message.length(); i++) {
@@ -59,7 +62,7 @@ static String encrypt(String message, int key) {
 			System.out.println("Inner current "+alpha[j]);
 			if(message.charAt(i) ==  alpha[j]) {
 				System.out.println("found similar");
-				if(j+key > alpha.length-1) { //if you are going out of bounds
+				if(j+key > alpha.length) { //if you are going out of bounds
 					char past = alpha[(j+key)-(alpha.length)];
 					changed += past;
 				}
