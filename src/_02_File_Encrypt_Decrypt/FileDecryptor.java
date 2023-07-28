@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
+import java.lang.Math;
 
 public class FileDecryptor extends FileEncryptor {
 	/*
@@ -35,22 +36,49 @@ public class FileDecryptor extends FileEncryptor {
 	static void decrypt() {
 		char[] alpha = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
 				't', 'u', 'v', 'w', 'x', 'y', 'z' };
+
+		String decry = "";
+
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("src/_02_File_Encrypt_Decrypt/messages.txt"));
-			String line = br.readLine();
-			int loop = 0;
-			int key = 0;
-			String s = "";
-			while (line != null) {
 
-				//f
+			String str = br.readLine();
+			String encry = br.readLine();
+			br.close();
+			int key = Integer.parseInt(str);
+
+			if (key > 26 || key == 26) {
+				while (key >= 25) {
+					key = key - 26;
+				}
 			}
-			
+
+			for (int i = 0; i < encry.length(); i++) {
+				for (int j = 0; i < alpha.length - 1; j++) {
+					if (encry.charAt(i) == alpha[j]) {
+						
+						if (j - key < 0) {
+							int abs = Math.abs(j - key);
+							decry += alpha[26 - abs];
+							break;
+						} else {
+							decry += alpha[j - key];
+							break;
+						}
+					}
+
+				}
+
+			}
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		JOptionPane.showMessageDialog(null, decry);
+
 	}
 
 }
+//Copyright © 2019 hello
